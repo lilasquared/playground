@@ -26,12 +26,3 @@ module.exports = app => {
     res.send(response.data)
   })
 }
-
-// fetch('/api/token', { method: 'POST' })
-//   .then(r => r.json())
-//   .then(data => data.token)
-//   .then(token => {
-//     fetch('/api/people/1', { headers: { ['X-Auth-Header']: token }})
-//     .then(r => r.json())
-//     .then(data => console.log(data))
-//   })
