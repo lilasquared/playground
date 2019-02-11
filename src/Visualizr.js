@@ -11,6 +11,8 @@ function useApiData(url, initialData) {
   const client = axios.create()
 
   useEffect(() => {
+    if (!url) return
+
     client
       .get("/api/explore", { params: { url } })
       .then(response => setData(response.data))

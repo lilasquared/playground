@@ -6,8 +6,7 @@ import {
   InputGroupAddon,
   Button,
 } from "reactstrap"
-import { Route, Redirect } from "react-router"
-import { withRouter } from "react-router-dom"
+import { Route, Redirect, withRouter, Link } from "react-router-dom"
 import Visualizr from "./Visualizr"
 
 const ExploreButton = withRouter(({ history, url }) => (
@@ -26,15 +25,16 @@ function App() {
       <Route
         exact
         path="/"
-        component={() => <Redirect to="/https://swapi.co/api/" />}
+        render={() => <Redirect to="/https://swapi.co/api/" />}
       />
       <Route
         path="/*"
         component={({ match, location }) => {
-          const [url, setUrl] = useState(match.params[0] + location.search)
+          const inputUrl = match.params[0] + location.search
+          const [url, setUrl] = useState(inputUrl)
           return (
             <>
-              <h1>API Visualizr</h1>
+              <Link to='/'><h1>API Visualizr</h1></Link>
               <InputGroup>
                 <Input value={url} onChange={e => setUrl(e.data.value)}/>
                 <InputGroupAddon addonType="append">
@@ -43,7 +43,7 @@ function App() {
               </InputGroup>
 
               <br />
-              <Visualizr url={url} />
+              <Visualizr url={inputUrl} />
             </>
           )
         }}
