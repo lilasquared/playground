@@ -12,7 +12,7 @@ function useApiData(url, initialData) {
 
   useEffect(() => {
     client
-      .get("/api/explore", { params: { url: unescape(url) } })
+      .get("/api/explore", { params: { url } })
       .then(response => setData(response.data))
       .catch(console.error)
   }, [url])
@@ -24,7 +24,7 @@ const renderHttpString = ({ key, value }) => {
   const match = value.match('"(http.*)"')
   if (match) {
     return (
-      <Link key={key} to={`/${escape(match[1])}`}>
+      <Link key={key} to={`/${match[1]}`}>
         {value}
       </Link>
     )

@@ -30,20 +30,20 @@ function App() {
       />
       <Route
         path="/*"
-        component={({ match }) => {
-          const [url, setUrl] = useState(unescape(match.params[0]))
+        component={({ match, location }) => {
+          const [url, setUrl] = useState(match.params[0] + location.search)
           return (
             <>
               <h1>API Visualizr</h1>
               <InputGroup>
-                <Input value={url} onChange={e => setUrl(e.target.value)} />
+                <Input value={url} onChange={e => setUrl(e.data.value)}/>
                 <InputGroupAddon addonType="append">
                   <ExploreButton url={url} />
                 </InputGroupAddon>
               </InputGroup>
 
               <br />
-              <Visualizr url={match.params[0]} />
+              <Visualizr url={url} />
             </>
           )
         }}
