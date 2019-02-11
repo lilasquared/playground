@@ -34,7 +34,7 @@ function App() {
           const [url, setUrl] = useState(inputUrl)
           return (
             <>
-              <Link to='/'><h1>API Visualizr</h1></Link>
+              <h1><Link to='/'>API Visualizr</Link></h1>
               <InputGroup>
                 <Input value={url} onChange={e => setUrl(e.data.value)}/>
                 <InputGroupAddon addonType="append">
