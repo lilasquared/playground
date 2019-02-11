@@ -1,5 +1,4 @@
 import React from "react"
-import { Link } from "react-router-dom"
 
 function createStyleObject(classNames, elementStyle = {}, stylesheet) {
   return classNames.reduce((styleObject, className) => {
@@ -11,7 +10,7 @@ function createClassNameString(classNames) {
   return classNames.join(" ")
 }
 
-function createChildren(stylesheet, useInlineStyles) {
+function createChildren(stylesheet, useInlineStyles, renderText) {
   let childrenCount = 0
   return children => {
     childrenCount += 1
@@ -21,25 +20,30 @@ function createChildren(stylesheet, useInlineStyles) {
         stylesheet,
         useInlineStyles,
         key: `code-segment-${childrenCount}-${i}`,
+        renderText,
       })
     )
   }
 }
 
-function createElement({ node, stylesheet, style = {}, useInlineStyles, key }) {
+function createElement({
+  node,
+  stylesheet,
+  style = {},
+  useInlineStyles,
+  key,
+  renderText,
+}) {
+  debugger
   const { properties, type, tagName: TagName, value } = node
   if (type === "text") {
-    const match = value.match('"(http.*/api.*)"')
-    if (match) {
-      return (
-        <Link key={key} to={`/${match[1]}`}>
-          {value}
-        </Link>
-      )
-    }
-    return value
+    return renderText({ key, value })
   } else if (TagName) {
-    const childrenCreator = createChildren(stylesheet, useInlineStyles)
+    const childrenCreator = createChildren(
+      stylesheet,
+      useInlineStyles,
+      renderText
+    )
     const nonStylesheetClassNames =
       useInlineStyles &&
       properties.className &&
@@ -71,13 +75,14 @@ function createElement({ node, stylesheet, style = {}, useInlineStyles, key }) {
   }
 }
 
-export default function renderer({ rows, stylesheet, useInlineStyles }) {
+export default renderText => ({ rows, stylesheet, useInlineStyles }) => {
   return rows.map((node, i) =>
     createElement({
       node,
       stylesheet,
       useInlineStyles,
       key: `code-segment${i}`,
+      renderText,
     })
   )
 }

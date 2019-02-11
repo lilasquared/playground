@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react"
 import axios from "axios"
+import { Link } from "react-router-dom"
 import SyntaxHighlighter from "react-syntax-highlighter"
-import linksRenderer from "./react-syntax-highlighter-links-renderer"
+import stringRenderer from "./react-syntax-highlighter-string-renderer"
 import { vs2015 } from "react-syntax-highlighter/dist/styles/hljs"
 
 function useApiData(url, initialData) {
@@ -22,6 +23,18 @@ function useApiData(url, initialData) {
   return data
 }
 
+const renderHttpString = ({ key, value }) => {
+  const match = value.match('"(http.*)"')
+  if (match) {
+    return (
+      <Link key={key} to={`/${value}`}>
+        {value}
+      </Link>
+    )
+  }
+  return value
+}
+
 const Visualizr = ({ url }) => {
   const data = useApiData(url, {})
   return (
@@ -30,7 +43,7 @@ const Visualizr = ({ url }) => {
         language="json"
         style={vs2015}
         showLineNumbers
-        renderer={linksRenderer}
+        renderer={stringRenderer(renderHttpString)}
       >
         {JSON.stringify(data, null, 2)}
       </SyntaxHighlighter>
