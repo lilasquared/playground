@@ -8,6 +8,7 @@ import {
 } from "reactstrap"
 import { Route, Redirect, withRouter, Link } from "react-router-dom"
 import Visualizr from "./Visualizr"
+import MarkupExplorer from "./MarkupExplorer"
 
 const ExploreButton = withRouter(({ history, url }) => (
   <Button
@@ -34,9 +35,11 @@ function App() {
           const [url, setUrl] = useState(inputUrl)
           return (
             <>
-              <h1><Link to='/'>API Visualizr</Link></h1>
+              <h1>
+                <Link to="/">API Visualizr</Link>
+              </h1>
               <InputGroup>
-                <Input value={url} onChange={e => setUrl(e.data.value)}/>
+                <Input value={url} onChange={e => setUrl(e.data.value)} />
                 <InputGroupAddon addonType="append">
                   <ExploreButton url={url} />
                 </InputGroupAddon>
@@ -48,6 +51,13 @@ function App() {
           )
         }}
       />
+      <MarkupExplorer language="html">
+        <div className="test">
+          <div className="test__component">
+            <h1>This is a new heading 2</h1>
+          </div>
+        </div>
+      </MarkupExplorer>
     </Container>
   )
 }
