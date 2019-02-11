@@ -31,7 +31,7 @@ function App() {
       <Route
         path="/*"
         component={({ match }) => {
-          const [url, setUrl] = useState(match.params[0])
+          const [url, setUrl] = useState(unescape(match.params[0]))
           return (
             <>
               <h1>API Visualizr</h1>

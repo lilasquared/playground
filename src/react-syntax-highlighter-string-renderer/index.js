@@ -34,7 +34,6 @@ function createElement({
   key,
   renderText,
 }) {
-  debugger
   const { properties, type, tagName: TagName, value } = node
   if (type === "text") {
     return renderText({ key, value })
