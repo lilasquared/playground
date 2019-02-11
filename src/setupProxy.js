@@ -14,6 +14,17 @@ module.exports = app => {
     res.send()
   })
 
+  app.get("/api/explore", async (req, res, next) => {
+    try {
+      const response = await axios.get(req.query.url)
+      res.send(response.data)
+    } catch (error) {
+      console.log(error)
+      res.status(500)
+      res.send()
+    }
+  })
+
   app.get("/api/*", async (req, res, next) => {
     const expires = new Date(atob(req.get("x-auth-header") || "") || 0)
 
@@ -21,8 +32,14 @@ module.exports = app => {
       return res.status(401).send("Not Authorized")
     }
 
-    const response = await axios.get(`https://swapi.co/${req.originalUrl}`)
-    res.set("x-auth-header", token())
-    res.send(response.data)
+    try {
+      const response = await axios.get(`https://swapi.co/${req.originalUrl}`)
+      res.set("x-auth-header", token())
+      res.send(response.data)
+    } catch (error) {
+      res.set("x-auth-header", token())
+      res.status(error.response.status)
+      res.send()
+    }
   })
 }

@@ -1,6 +1,7 @@
 import React from "react"
 import ReactDOMServer from "react-dom/server"
 import SyntaxHighlighter from "react-syntax-highlighter"
+import linksRenderer from "./react-syntax-highlighter-links-renderer"
 import { vs2015 } from "react-syntax-highlighter/dist/styles/hljs"
 
 import pretty from "pretty"
@@ -25,7 +26,12 @@ const Markup = ({ language, data, only }) => {
   return (
     <>
       {!only && data}
-      <SyntaxHighlighter language={language} style={vs2015} showLineNumbers>
+      <SyntaxHighlighter
+        language={language}
+        style={vs2015}
+        showLineNumbers
+        renderer={linksRenderer}
+      >
         {markup}
       </SyntaxHighlighter>
     </>
