@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react"
 import axios from "axios"
 
+const client = axios.create()
+
 export function useApiData(url, initialData = {}) {
   const [data, setData] = useState(initialData)
   const [loading, setLoading] = useState(false)
-
-  const client = axios.create()
 
   useEffect(() => {
     if (!url) return
