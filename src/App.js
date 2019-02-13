@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React from "react"
 import {
   Container,
   Input,
@@ -28,29 +28,18 @@ function App() {
         path="/"
         render={() => <Redirect to="/https://swapi.co/api/" />}
       />
-      <Route
-        path="/*"
-        component={({ match, location }) => {
-          const inputUrl = match.params[0] + location.search
-          const [url, setUrl] = useState(inputUrl)
-          return (
-            <>
-              <h1>
-                <Link to="/">API Visualizr</Link>
-              </h1>
-              <InputGroup>
-                <Input value={url} onChange={e => setUrl(e.data.value)} />
-                <InputGroupAddon addonType="append">
-                  <ExploreButton url={url} />
-                </InputGroupAddon>
-              </InputGroup>
-
-              <br />
-              <Visualizr url={inputUrl} />
-            </>
-          )
-        }}
-      />
+      <Route path="/*" render={props => <Component {...props} />} />
+      Good Apis:
+      <ul>
+        <li>
+          <Link to="/https://anapioficeandfire.com/api/">
+            https://anapioficeandfire.com/api/
+          </Link>
+        </li>
+        <li>
+          <Link to="/https://swapi.co/api">https://swapi.co/api</Link>
+        </li>
+      </ul>
       <MarkupExplorer language="html">
         <div className="test">
           <div className="test__component">
@@ -59,6 +48,35 @@ function App() {
         </div>
       </MarkupExplorer>
     </Container>
+  )
+}
+
+const handleFormSubmit = history => e => {
+  e.preventDefault()
+  const value = new FormData(e.target).get("url")
+  history.push("/" + value)
+}
+
+const Component = ({ match, history, location }) => {
+  const url = match.params[0] + location.search
+
+  return (
+    <>
+      <h1>
+        <Link to="/">API Visualizr</Link>
+      </h1>
+      <form onSubmit={handleFormSubmit(history)} key={url}>
+        <InputGroup>
+          <Input name="url" defaultValue={url} />
+          <InputGroupAddon addonType="append">
+            <ExploreButton url={url} />
+          </InputGroupAddon>
+        </InputGroup>
+      </form>
+
+      <br />
+      <Visualizr url={url} />
+    </>
   )
 }
 

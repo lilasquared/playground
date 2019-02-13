@@ -15,7 +15,8 @@
     "react-scripts": "2.1.3",
     "react-syntax-highlighter": "^10.1.2",
     "react-use-localstorage": "^2.3.0",
-    "reactstrap": "^7.1.0"
+    "reactstrap": "^7.1.0",
+    "styled-components": "^4.1.3"
   },
   "scripts": {
     "start": "react-scripts start",
