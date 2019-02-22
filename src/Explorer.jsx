@@ -37,6 +37,18 @@ export default function Explorer({ match, history, location }) {
       </form>
       <br />
       <Visualizr url={url} />
+      <br />
+      Good APIs:
+      <ul>
+        <li>
+          <Link to="/https://anapioficeandfire.com/api/">
+            https://anapioficeandfire.com/api/
+          </Link>
+        </li>
+        <li>
+          <Link to="/https://swapi.co/api">https://swapi.co/api</Link>
+        </li>
+      </ul>
     </>
   )
 }
